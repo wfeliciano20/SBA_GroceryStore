@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  postgres:
+    image: 'postgres:latest'
+    container_name: PostgresStoreDb
+    restart: unless-stopped
+    environment:
+      - 'POSTGRES_DB=grocery_store_db'
+      - 'POSTGRES_PASSWORD=pass_db'
+      - 'POSTGRES_USER=user_db'
+    ports:
+      - '5434:5432'
+    volumes:
+      - store-db-data:/var/lib/postgresql/data
+    networks:
+      - spring-store-network
+volumes:
+  store-db-data:
+networks:
+  spring-store-network:
+    driver: bridge
