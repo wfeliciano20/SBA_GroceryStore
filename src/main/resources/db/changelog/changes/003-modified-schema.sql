@@ -8,14 +8,14 @@ CREATE TABLE categories (
                     FOREIGN KEY (parent_category_id) REFERENCES categories (id)
 );
 
--- rollback drop table category;
+-- rollback drop table categories;
 
 ALTER TABLE items
     DROP  COLUMN  category,
     ADD COLUMN  category_id INT,
     ADD CONSTRAINT fk_category
-    FOREIGN KEY (category_id) REFERENCES category(id);
+    FOREIGN KEY (category_id) REFERENCES categories(id);
 
--- rollback alter table items drop column category_id;
+-- rollback alter table items drop column category_id add column category VARCHAR(255);
 
 
