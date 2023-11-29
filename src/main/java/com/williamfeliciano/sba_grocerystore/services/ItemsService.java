@@ -29,9 +29,9 @@ public class ItemsService {
         return itemMapper.toDetailedItemResponseDto(dbItem);
     }
 
-    public List<Item> getItemsByCategoryId(long categoryId) {
-        return itemRepository.findByCategoryId(categoryId)
+    public List<DetailedItemResponseDto> getItemsByCategoryId(long categoryId) {
+        var items = itemRepository.findByCategoryId(categoryId)
                 .orElseThrow(() -> new AppException(String.format("No Items found for category with id %s", categoryId), HttpStatus.NOT_FOUND));
+        return items.stream().map(itemMapper::toDetailedItemResponseDto).toList();
     }
-
 }

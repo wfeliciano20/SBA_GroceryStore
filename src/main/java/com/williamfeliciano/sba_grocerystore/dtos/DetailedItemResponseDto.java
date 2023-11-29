@@ -18,6 +18,6 @@ public class DetailedItemResponseDto {
     private String price;
     private String category;
     private String pictureUrl;
-    private int weight;
+    private double weight;
     private int stockAmount;
 }

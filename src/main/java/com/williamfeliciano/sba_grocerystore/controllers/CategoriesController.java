@@ -1,5 +1,6 @@
 package com.williamfeliciano.sba_grocerystore.controllers;
 
+import com.williamfeliciano.sba_grocerystore.dtos.DetailedItemResponseDto;
 import com.williamfeliciano.sba_grocerystore.entities.Category;
 import com.williamfeliciano.sba_grocerystore.entities.Item;
 import com.williamfeliciano.sba_grocerystore.services.CategoryService;
@@ -41,7 +42,7 @@ public class CategoriesController {
 
     // Add a method for GET /categories/{category}/items if needed
     @GetMapping("/{category}/items")
-    public ResponseEntity<List<Item>> getItemsFromCategory(@PathVariable String category) {
+    public ResponseEntity<List<DetailedItemResponseDto>> getItemsFromCategory(@PathVariable String category) {
         var dbCategory = categoryService.getCategoryByName(category);
         return ResponseEntity.ok(itemsService.getItemsByCategoryId(dbCategory.getId()));
     }
