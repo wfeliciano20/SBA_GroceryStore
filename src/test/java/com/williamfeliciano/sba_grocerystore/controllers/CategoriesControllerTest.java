@@ -2,6 +2,7 @@ package com.williamfeliciano.sba_grocerystore.controllers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.williamfeliciano.sba_grocerystore.config.RestExceptionHandler;
+import com.williamfeliciano.sba_grocerystore.dtos.DetailedItemResponseDto;
 import com.williamfeliciano.sba_grocerystore.entities.Category;
 import com.williamfeliciano.sba_grocerystore.entities.Item;
 import com.williamfeliciano.sba_grocerystore.services.CategoryService;
@@ -72,9 +73,12 @@ public class CategoriesControllerTest {
         var item1 = Item.builder().name("Smartphone").description("Latest model").price(BigDecimal.valueOf( 699.99)).category(Category.builder().name("Electronics").build()).pictureUrl("https://example.com/smartphone.jpg").weight(0.3).stockAmount(50).build();
         var item2 = Item.builder().name("Laptop X1").description("Powerful laptop").price(BigDecimal.valueOf(1499.99)).category(Category.builder().name("Electronics").build()).pictureUrl("https://example.com/laptopx1.jpg").weight(2.5).stockAmount(20).build();
         var items = List.of(item1, item2);
-        BDDMockito.given(itemsService.getItemsByCategoryId(subcategories.get(0).getId())).willReturn(items);
+        var detailedItemResponseDto1 = DetailedItemResponseDto.builder().id(1L).name("Smartphone").price("699.99").category("Electronics").pictureUrl("https://example.com/smartphone.jpg").description("Latest model").weight(0.3).stockAmount(50).build();
+        var detailedItemResponseDto2 = DetailedItemResponseDto.builder().id(2L).name("Laptop X1").price("1499.99").category("Electronics").pictureUrl("https://example.com/laptopx1.jpg").description("Powerful laptop").weight(2.5).stockAmount(20).build();
+        var dtosList = List.of(detailedItemResponseDto1, detailedItemResponseDto2);
+        BDDMockito.given(itemsService.getItemsByCategoryId(subcategories.get(0).getId())).willReturn(dtosList);
 
-       mockMvc.perform(MockMvcRequestBuilders.get("/categories/{category}/items", category).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(MockMvcRequestBuilders.get("/categories/{category}/items", category).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(items.size()))
                 .andExpect(jsonPath("$[0].name").value("Smartphone"))

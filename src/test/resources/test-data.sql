@@ -1,5 +1,5 @@
 -- Assuming the id is an auto-incremented primary key
---
+
 INSERT INTO items (name, description, price, category, picture_url, weight, stock_amount)
 VALUES
     ('Item 1', 'Description for Item 1', 19.99, 'Category A', 'https://example.com/item1.jpg', 500, 100),

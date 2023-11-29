@@ -74,8 +74,13 @@ public class ItemServiceTest {
         var categoryID = 1L;
         var item1 = Item.builder().name("Smartphone").description("Latest model").price(BigDecimal.valueOf( 699.99)).category(Category.builder().name("Electronics").build()).pictureUrl("https://example.com/smartphone.jpg").weight(0.3).stockAmount(50).build();
         var item2 = Item.builder().name("Laptop X1").description("Powerful laptop").price(BigDecimal.valueOf(1499.99)).category(Category.builder().name("Electronics").build()).pictureUrl("https://example.com/laptopx1.jpg").weight(2.5).stockAmount(20).build();
+        var detailedItemResponseDto1 = DetailedItemResponseDto.builder().id(1L).name("Smartphone").price("699.99").category("Electronics").pictureUrl("https://example.com/smartphone.jpg").description("Latest model").weight(0.3).stockAmount(50).build();
+        var detailedItemResponseDto2 = DetailedItemResponseDto.builder().id(2L).name("Laptop X1").price("1499.99").category("Electronics").pictureUrl("https://example.com/laptopx1.jpg").description("Powerful laptop").weight(2.5).stockAmount(20).build();
         var items = List.of(item1, item2);
+        var dtoList = List.of(detailedItemResponseDto1, detailedItemResponseDto2);
         BDDMockito.given(itemRepository.findByCategoryId(categoryID)).willReturn(java.util.Optional.of(items));
+        BDDMockito.given(itemMapper.toDetailedItemResponseDto(item1)).willReturn(detailedItemResponseDto1);
+        BDDMockito.given(itemMapper.toDetailedItemResponseDto(item2)).willReturn(detailedItemResponseDto2);
         var result = itemsService.getItemsByCategoryId(categoryID);
         Assertions.assertThat(result).isNotNull();
         Assertions.assertThat(result.size()).isEqualTo(2);
