@@ -2,7 +2,7 @@
 CREATE TABLE categories (
                             id BIGINT PRIMARY KEY,
                             name VARCHAR(255) NOT NULL,
-                            parent_category_id INT REFERENCES categories(id)
+                            parent_category_id BIGINT REFERENCES categories(id)
 );
 
 CREATE TABLE IF NOT EXISTS items (
@@ -10,9 +10,9 @@ CREATE TABLE IF NOT EXISTS items (
                        name VARCHAR NOT NULL,
                        description VARCHAR NOT NULL,
                        price NUMERIC NOT NULL,
-                       category_id INT NOT NULL REFERENCES categories (id),
+                       category_id BIGINT NOT NULL REFERENCES categories (id),
                        picture_url VARCHAR,
-                       weight INTEGER,
+                       weight FLOAT,
                        stock_amount INTEGER
 );
 

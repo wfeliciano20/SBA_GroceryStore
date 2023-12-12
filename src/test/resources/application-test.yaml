@@ -13,4 +13,8 @@ spring:
     console:
       enabled: true
   liquibase.enabled: false
+  jpa:
+      hibernate:
+                ddl-auto: validate
+
 
